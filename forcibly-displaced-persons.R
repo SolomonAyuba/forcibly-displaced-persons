@@ -3,7 +3,7 @@
 # https://www.unhcr.org/refugee-statistics/insights/explainers/refugees-r-package.html
 
 #______________________________________________________________________________
-## installing the libraries/Packages needed for this project
+## installing the Packages needed for this project
 
 # importing custom rmd templates from 'rticles' from CRAN
 install.packages('rticles')
@@ -45,7 +45,7 @@ library(dplyr)
 library(tidyr)
   
 # DATASETS
-# The refugees package includes eight datasets:
+# The refugees package includes 8 datasets:
 # population: Data on forcibly displaced and stateless persons by year, 
   # including refugees, asylum-seekers, internally displaced people (IDPs) and 
   # stateless people. Detailed definitions of the different population groups 
