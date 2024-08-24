@@ -112,4 +112,8 @@ colSums(is.na(population_df))
 =======
 View(refugees)
 str(refugees)
+<<<<<<< HEAD
 >>>>>>> Backup and guidline file updated.
+=======
+
+>>>>>>> Staged change
