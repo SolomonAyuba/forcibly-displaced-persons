@@ -73,5 +73,3 @@ help("refugees")
 glimpse(refugees::population)
 glimpse(refugees::demographics)
 
-View(refugees)
-str(refugees)
