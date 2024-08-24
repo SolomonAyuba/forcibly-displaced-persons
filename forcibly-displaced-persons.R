@@ -69,3 +69,41 @@ library(tidyr)
 
 glimpse(refugees::population)
 glimpse(refugees::demographics)
+
+#Assignig the 8 datasets in the refugees package to 8 variables:
+population_df <- refugees::population
+idmc_df <- refugees::idmc
+asylum_apps_df <- refugees::asylum_applications
+asylum_dec_df <- refugees::asylum_decisions
+demographics_df <- refugees::demographics
+solutions_df <- refugees::solutions
+unrwa_df <- refugees::unrwa
+flows_df <- refugees::flows
+
+#WORKING ON THE POPULATION DATAFRAME
+#Explore the dataframe briefly to understand its structure
+
+#Get the first few rows of the dataset
+head(population_df)
+
+#View the structure of the dataset
+str(population_df)
+
+#Get the summary/descriptive statistics of the dataset
+summary(population_df)
+
+#Check the shape/dimension(rows, columns) of the dataframe
+dim(population_df)
+
+
+#Data Cleaning
+
+#Check for missing values in the dataframe
+colSums(is.na(population_df))
+
+#The oip column has 126,286 missing values out of 126,402 (about 99% missing values). It's best to drop the column.
+population_df <- subset(population_df, select = -oip)
+
+#Check for missing values again
+colSums(is.na(population_df))
+
