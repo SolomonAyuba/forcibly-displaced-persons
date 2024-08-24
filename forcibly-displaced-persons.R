@@ -71,8 +71,8 @@ help("refugees")
 glimpse(refugees::population)
 glimpse(refugees::demographics)
 
-<<<<<<< HEAD
-#Assignig the 8 datasets in the refugees package to 8 variables:
+
+#Assigning the 8 datasets in the refugees package to 8 variables:
 population_df <- refugees::population
 idmc_df <- refugees::idmc
 asylum_apps_df <- refugees::asylum_applications
@@ -81,6 +81,16 @@ demographics_df <- refugees::demographics
 solutions_df <- refugees::solutions
 unrwa_df <- refugees::unrwa
 flows_df <- refugees::flows
+
+#View the content of each Datasets using this codes
+View(population_df)
+View(idmc_df)
+View(asylum_apps_df)
+View(asylum_dec_df)
+View(demographics_df)
+View(solutions_df)
+View(unrwa_df)
+View(flows_df)
 
 #WORKING ON THE POPULATION DATAFRAME
 #Explore the dataframe briefly to understand its structure
@@ -109,11 +119,4 @@ population_df <- subset(population_df, select = -oip)
 #Check for missing values again
 colSums(is.na(population_df))
 
-=======
-View(refugees)
-str(refugees)
-<<<<<<< HEAD
->>>>>>> Backup and guidline file updated.
-=======
 
->>>>>>> Staged change

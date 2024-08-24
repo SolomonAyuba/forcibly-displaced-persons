@@ -1,4 +1,4 @@
-## This is a backup of the r.file incase anything goes south.
+## This is a backup of the r.file in case anything goes south.
 
 # Initiated Fri 23 August, 2024
 # data from UNHCR on forcibly displaced persons
