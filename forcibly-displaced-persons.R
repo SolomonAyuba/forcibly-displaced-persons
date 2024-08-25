@@ -119,4 +119,4 @@ population_df <- subset(population_df, select = -oip)
 #Check for missing values again
 colSums(is.na(population_df))
 
-
+# Cornelius Demonstation video
