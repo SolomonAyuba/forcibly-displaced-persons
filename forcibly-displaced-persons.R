@@ -120,3 +120,22 @@ population_df <- subset(population_df, select = -oip)
 colSums(is.na(population_df))
 
 # Cornelius Demonstation video
+head(population_df)
+
+#Creating a smaller dataframe to see the total number of refugees based on the country of origin name(coo_name)
+#Summarize the population dataframe using dplyr package
+origin_by_refugees <- population_df %>% group_by(coo_name) %>% 
+                      summarize(total_refugees = sum(refugees))
+#Checking the origin_by_refugees datafram
+origin_by_refugees
+
+#Since there are about 204 different countries of origin, let's visualize the top 10
+#The code below selects the top 10 countries based on the total number of refugees
+top_10_origin <- origin_by_refugees[order(-origin_by_refugees$total_refugees), ][1:10, ]
+top_10_origin
+
+#Visualizing the top_10_origin
+pop_bar <-barplot(top_10_origin$total_refugees, names.arg = top_10_origin$coo_name, col = "blue",
+              main = "Top 10 countries where refugees originated from", xlab = "Categories", 
+              ylab = "Total Refugees", horiz=FALSE)
+
