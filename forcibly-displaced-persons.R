@@ -126,7 +126,7 @@ head(population_df)
 #Summarize the population dataframe using dplyr package
 origin_by_refugees <- population_df %>% group_by(coo_name) %>% 
                       summarize(total_refugees = sum(refugees))
-#Checking the origin_by_refugees datafram
+#Checking the origin_by_refugees dataframe
 origin_by_refugees
 
 #Since there are about 204 different countries of origin, let's visualize the top 10
