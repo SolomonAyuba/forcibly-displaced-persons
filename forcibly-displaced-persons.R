@@ -41,6 +41,7 @@ install.packages("tidyr")
 
 library(unhcrthemes)
 library(ggplot2)
+library(scales)
 library(dplyr)
 library(tidyr)
   
@@ -116,17 +117,28 @@ colSums(is.na(population_df))
 #The oip column has 126,286 missing values out of 126,402 (about 99% missing values). It's best to drop the column.
 population_df <- subset(population_df, select = -oip)
 
+
 #Check for missing values again
 colSums(is.na(population_df))
 
 # Cornelius Demonstation video
 head(population_df)
 
+#Get the earliest record (minimum year)
+min(population_df$year) #The earliest record of refugees is 1951
+
+#Get how many years were recorded
+length(unique(population_df$year)) #73 years
+
+#Check total refugees
+comma(sum(population_df$refugees)) #Over 700 million refugees from 1951 to 2023(73 years)
+
+
 #Creating a smaller dataframe to see the total number of refugees based on the country of origin name(coo_name)
 #Summarize the population dataframe using dplyr package
 origin_by_refugees <- population_df %>% group_by(coo_name) %>% 
                       summarize(total_refugees = sum(refugees))
-#Checking the origin_by_refugees datafram
+#Checking the origin_by_refugees dataframe
 origin_by_refugees
 
 #Since there are about 204 different countries of origin, let's visualize the top 10
@@ -139,3 +151,69 @@ pop_bar <-barplot(top_10_origin$total_refugees, names.arg = top_10_origin$coo_na
               main = "Top 10 countries where refugees originated from", xlab = "Categories", 
               ylab = "Total Refugees", horiz=FALSE)
 
+#An alternative way of plotting is using ggplot; This is the best way because it's more flexible
+ggplot(top_10_origin, aes(x = reorder(coo_name,total_refugees), y = total_refugees)) +
+  geom_bar(stat = "identity", fill = "blue") +
+  geom_text(aes(label = comma(total_refugees)), vjust = 0.1, hjust = -0, color = "black", size = 3.5) +
+  labs(title = "Top 10 countries where refugees originated from", 
+       x = "Country Name", y = "Total Refugees") +
+  coord_flip() +
+  theme_minimal()
+
+
+#Select top 10 countries that granted asylum to refugees(still on the population dataset)
+#First create a smaller dataframe that aggregates the total refugees for each country of asylum
+country_of_asylum <- population_df %>% group_by(coa_name) %>% 
+                      summarize(total_refugees = sum(refugees))
+
+#Check the dataframe
+country_of_asylum
+
+#select the top 10
+top_10_country_asylum <- country_of_asylum[order(-country_of_asylum$total_refugees), ][1:10, ]
+#check the top 10
+top_10_country_asylum
+
+#Visualize the top 10 countries that granted asylum to refugees using ggplot
+ggplot(top_10_country_asylum, aes(x = reorder(coa_name,total_refugees), y = total_refugees)) +
+  geom_bar(stat = "identity", fill = "blue") +
+  geom_text(aes(label = comma(total_refugees)), vjust = 0.1, hjust = -0, color = "black", size = 3.5) +
+  labs(title = "Top 10 countries that granted asylum to refugees", 
+       x = "Country Name", y = "Total Refugees") +
+  coord_flip() +
+  theme_minimal()
+
+#Distribution of refugees by year(Still on the population dataset)
+refugees_by_year <- population_df %>% group_by(year) %>% 
+                    summarize(total_refugees = sum(refugees))
+
+#check the refugees by year dataframe
+refugees_by_year
+
+#Get the year with the least number of refugees
+refugees_by_year[which.min(refugees_by_year$total_refugees), ] #1960 - 1,656,664
+
+#Get the year with the highest number of refugees
+refugees_by_year[which.max(refugees_by_year$total_refugees), ]#2023 - 31,637,408; ukraine VS russia War 
+
+#Visualize the trend of refugees over the years using refugees by year dataframe
+ggplot(refugees_by_year, aes(x = year, y = total_refugees)) +
+  geom_line(color = "red") +
+  labs(title = "Trend of refugees over 73 years", 
+       x = "Year", y = "Total Refugees") +
+  theme_minimal()
+
+#As there are 73 years worth of data, we'll visualize the top 10 years with the highest number of refugees
+top_10_years <- refugees_by_year[order(-refugees_by_year$total_refugees), ][1:10, ]
+
+#Check the top 10 years
+top_10_years
+
+#Visualize the top 10 years with the highest number of refugees
+ggplot(top_10_years, aes(x = reorder(year,total_refugees), y = total_refugees)) +
+  geom_bar(stat = "identity", fill = "blue") +
+  geom_text(aes(label = comma(total_refugees)), vjust = -0.3, hjust = 0.4, color = "black", size = 3.5) +
+  labs(title = "Top 10 Years with the highest number of refugees", 
+       x = "Years", y = "Total Refugees") +
+  coord_flip() +
+  theme_minimal()
